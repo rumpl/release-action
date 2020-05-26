@@ -238,10 +238,10 @@ describe("Action", () => {
             return {
                 allowUpdates: allowUpdates,
                 artifacts: inputArtifact,
-                body: body,
+                createdReleaseBody: body,
                 commit: commit,
                 draft: draft,
-                name: name,
+                createdReleaseName: name,
                 prerelease: prerelease,
                 replacesArtifacts: replacesArtifacts,
                 tag: tag,
