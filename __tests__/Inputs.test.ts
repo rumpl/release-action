@@ -117,7 +117,7 @@ describe('Inputs', () => {
             expect(inputs.createdReleaseBody).toBe('')
         })
 
-        it('returns null when omitted', () => {
+        it('returns undefined when omitted', () => {
             mockGetInput
                 .mockReturnValueOnce('true')
                 .mockReturnValueOnce('body')
@@ -133,7 +133,7 @@ describe('Inputs', () => {
             expect(inputs.createdReleaseName).toBe('name')
         })
 
-        it('returns null when omitted', () => {
+        it('returns undefined when omitted', () => {
             mockGetInput
                 .mockReturnValueOnce('true')
                 .mockReturnValueOnce('name')
@@ -199,6 +199,87 @@ describe('Inputs', () => {
         })
         it('throws if no tag', () => {
             expect(() => inputs.tag).toThrow()
+        })
+    })
+
+    describe('updatedReleaseBody', () => {
+        it('returns input body', () => {
+            mockGetInput
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('body')
+            expect(inputs.updatedReleaseBody).toBe('body')
+        })
+
+        it('returns body file contents', () => {
+            mockGetInput
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('')
+                .mockReturnValueOnce('a/path')
+            mockReadFileSync.mockReturnValue('file')
+
+            expect(inputs.updatedReleaseBody).toBe('file')
+        })
+
+        it('returns empty', () => {
+            mockGetInput
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('')
+                .mockReturnValueOnce('')
+            expect(inputs.updatedReleaseBody).toBe('')
+        })
+
+        it('returns undefined when omitted', () => {
+            mockGetInput
+                .mockReturnValueOnce('true')
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('body')
+            expect(inputs.updatedReleaseBody).toBeUndefined()
+        })
+
+        it('returns undefined when omitted for update', () => {
+            mockGetInput
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('true')
+                .mockReturnValueOnce('body')
+            expect(inputs.updatedReleaseBody).toBeUndefined()
+        })
+    })
+
+    describe('updatedReleaseName', () => {
+        it('returns input name', () => {
+            mockGetInput
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('name')
+            expect(inputs.updatedReleaseName).toBe('name')
+        })
+
+        it('returns undefined when omitted', () => {
+            mockGetInput
+                .mockReturnValueOnce('true')
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('name')
+            expect(inputs.updatedReleaseName).toBeUndefined()
+        })
+
+        it('returns undefined when omitted for update', () => {
+            mockGetInput
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('true')
+                .mockReturnValueOnce('name')
+            expect(inputs.updatedReleaseName).toBeUndefined()
+        })
+
+        it('returns tag', () => {
+            mockGetInput
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('false')
+                .mockReturnValueOnce('')
+            context.ref = 'refs/tags/sha-tag'
+            expect(inputs.updatedReleaseName).toBe('sha-tag')
         })
     })
 
