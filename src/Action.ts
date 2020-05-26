@@ -47,10 +47,10 @@ export class Action {
         const response = await this.releases.update(
             id,
             this.inputs.tag,
-            this.inputs.createdReleaseBody,
+            this.inputs.updatedReleaseBody,
             this.inputs.commit,
             this.inputs.draft,
-            this.inputs.createdReleaseName,
+            this.inputs.updatedReleaseName,
             this.inputs.prerelease
         )
 
